@@ -68,7 +68,7 @@ btnCancelar.addEventListener("click", function() {
 });
 
 btnCrear.addEventListener("click",function(){
-    const apiUrl = 'http://localhost:8090/genius/api/usuario/registra';
+    const apiUrl = 'https://servicio-biblioteca-unas.rj.r.appspot.com/genius/api/usuario/registra';
     console.log("fomr" , form)
   // Configuración de la solicitud
     const opciones = {
