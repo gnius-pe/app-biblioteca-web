@@ -6,16 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca Universidad Nacional Agraria de la Selva</title>
     <!-- Agrega las hojas de estilo de Bootstrap CSS y el archivo JavaScript de Bootstrap (jQuery es necesario para Bootstrap) -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">BIBILIOTECA UNAS</a>
+            <a class="navbar-brand" href="#"><i class='bx bx-library' ></i>BIBILIOTECA UNAS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -23,27 +26,28 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">inicio <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">inicio <i class='bx bxs-home'></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Libros</a>
+                        <a class="nav-link" href="#">Libros <i class='bx bxs-book'></i></a>
                     </li>
                 </ul>
                 <div class="collapse navbar-collapse" id="perfilNavbar">
                     <ul class="navbar-nav ml-auto">
                         <!-- Enlace del perfil que activa el dropdown -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="perfilDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bxs-user-circle' ></i>
                                 Perfil
                             </a>
                             <!-- Dropdown del perfil -->
                             <div class="dropdown-menu" aria-labelledby="perfilDropdown">
-                                <a class="dropdown-item" href="#">Nombre de Usuario</a>
-                                <a class="dropdown-item" href="#">Correo electrónico:</a>
+                                <a class="dropdown-item"></a><i class='bx bxs-user-badge' ></i>Nombre de Usuario</a>
+                                <a class="dropdown-item"></a><i class='bx bxs-envelope' ></i>Correo electrónico:</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                                <a class="dropdown-item" href="#"></a><i class='bx bx-log-in' ></i>Cerrar Sesión</a>
                             </div>
-                            
+
                         </li>
                     </ul>
                 </div>
@@ -51,16 +55,66 @@
         </div>
     </nav>
     <br></br>
-
-    <div class="card" style="width: 18rem;">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+    <h3 class="text-center">Listado de Libros</h3>
+    <div class="container">
+        <div class="row" id="libros-lista">
+            <!-- Aquí se mostrarán los libros en tarjetas -->
         </div>
     </div>
+    <script>
+        // Realizar una solicitud AJAX a la API
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://servicio-biblioteca-unas.rj.r.appspot.com/genius/api/documento/todo", true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Parsear la respuesta JSON
+                var libros = JSON.parse(xhr.responseText);
+
+                // Obtener el contenedor de libros
+                var librosLista = document.getElementById("libros-lista");
+
+                // Contador para rastrear el número de libros por fila
+                var contador = 0;
+
+                // Iterar a través de los libros y crear tarjetas Bootstrap
+                libros.forEach(function (libro) {
+                    // Crear una nueva tarjeta Bootstrap
+                    var libroDiv = document.createElement("div");
+                    libroDiv.className = "col-md-3"; // Cada fila contendrá 4 tarjetas
+
+                    libroDiv.innerHTML = `
+                        <div class="card" style="width: 18rem;">
+                            <img src="${libro.urlImg}" class="card-img-top mx-auto d-block" alt="${libro.nombre}" style="width: 200px; height: 300px;">
+                            <div class="card-body">
+                                <h4 class="card-title text-center">${libro.nombre}</h4>
+                                <p class="card-text">Área: ${libro.area}</p>
+                                <p class="card-text">Autor: ${libro.autor}</p>
+                                <p class="card-text">Código: ${libro.codigo}</p>
+                                <p class="card-text">Tipo de Documento: ${libro.tipo_documento}</p>
+                                <p class="card-text">Cantidad disponible: ${libro.cantidad}</p>
+                                <button type="button" class="btn btn-success ">Reservar <i class='bx bxs-bell' ></i></button>
+                            </div>
+                        </div>
+                        <br>
+                    `;
+
+                    // Agregar la tarjeta al contenedor de libros
+                    librosLista.appendChild(libroDiv);
+
+                    contador++;
+
+                    // Si hemos agregado 4 libros, crear una nueva fila
+                    if (contador === 4) {
+                        contador = 0;
+                        var newRow = document.createElement("div");
+                        newRow.className = "row";
+                        librosLista.appendChild(newRow);
+                    }
+                });
+            }
+        };
+        xhr.send();
+    </script>
 </body>
 
 </html>
