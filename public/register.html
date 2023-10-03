@@ -19,49 +19,51 @@
                         <h2 class="text-center">Formulario de Registro</h2>
                     </div>
                     <div class="card-body">
-                        <form action="procesar_registro.php" method="POST">
+                        <div >
                             <div class="form-group">
                                 <label for="BuscarCodigo">Codigo</label>
                                 <input type="text" class="form-control" id="BuscarCodigo" placeholder="Codigo de estudiante">
                               </div>
+                              <div class="form-group">
+                                <label for="contrasena">Contraseña:</label>
+                                <input type="password" id="inputContrasena" name="contrasena" class="form-control" placeholder="********" required>
+                            </div>
                               <br>
                               <div class="form-group">
-                                <button type="submit" class="btn btn-primary mb-3">Buscar Codigo</button>
+                                <button type="submit" class="btn btn-primary mb-3" id="btnBuscarCodigo">Buscar Codigo</button>
                               </div>
                             
                             <div class="form-group">
                                 <label for="codigo">Código:</label>
-                                <input type="text" id="codigo" name="codigo" class="form-control" required>
+                                <input type="text" id="codigo" name="codigo" class="form-control" required disabled>
                             </div>
                             <div class="form-group">
                                 <label for="nombre">Nombre:</label>
-                                <input type="text" id="nombre" name="nombre" class="form-control" required>
+                                <input type="text" id="inputNombre" name="nombre" class="form-control" required disabled>
                             </div>
                             <div class="form-group">
                                 <label for="apellidoPaterno">Apellido paterno:</label>
-                                <input type="text" id="apellidoPaterno" name="apellidoPaterno" class="form-control"  required>
+                                <input type="text" id="inputApellidoPaterno" name="apellidoPaterno" class="form-control"  required disabled>
                             </div>
                             <div class="form-group">
                                 <label for="apellidoMaterno">Apellido materno:</label>
-                                <input type="text" id="apellidoMaterno" name="apellidoMaterno" class="form-control" required>
+                                <input type="text" id="inputApellidoMaterno" name="apellidoMaterno" class="form-control" required disabled>
                             </div>
                             <div class="form-group">
                                 <label for="correo">Correo:</label>
-                                <input type="text" id="correo" name="correo" class="form-control" placeholder="nombre.apellidoPaterno@unas.edu.pe">
+                                <input type="text" id="inputCorreo" name="correo" class="form-control" placeholder="nombre.apellidoPaterno@unas.edu.pe" disabled>
                             </div>
+                            
                             <div class="form-group">
-                                <label for="contrasena">Contraseña:</label>
-                                <input type="password" id="contrasena" name="contrasena" class="form-control" placeholder="********" required>
+                                <button type="submit" class="btn btn-primary" id="btnCrear">Crear</button>
+                                <button type="button" class="btn btn-secondary" id="btnCancelar">Cancelar</button>
                             </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Crear</button>
-                                <button type="button" class="btn btn-secondary">Cancelar</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="/src/js/Registro.js"></script>
 </body>
 </html>
